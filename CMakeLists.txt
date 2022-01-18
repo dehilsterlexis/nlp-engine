@@ -4,10 +4,7 @@ project(nlp VERSION 0.1.0)
 include(CTest)
 enable_testing()
 
-set(ICU_DEBUG ON)
-set(ICU_ROOT ${CMAKE_SOURCE_DIR}/vcpkg/packages/icu_x64-windows)
-message(STATUS "ICU_ROOT: ${ICU_ROOT}")
-find_package(ICU COMPONENTS in io REQUIRED)
+find_package(ICU COMPONENTS uc i18n REQUIRED)
 
 set(CMAKE_GENERATOR_PLATFORM Win32 HINT )
 
