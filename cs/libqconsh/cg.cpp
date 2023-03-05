@@ -1729,7 +1729,7 @@ return false;
 }
 
 // Add num value at end of attribute's values.
-bool CG::addVal(CONCEPT *conc, _TCHAR *attr, long val)
+bool CG::addVal(CONCEPT *conc, _TCHAR *attr, long long val)
 {
 dirty_ = true;																	// 05/12/00 AM.
 if (cgattr_->attr_add_by_name((CON_ID) conc, attr, val))
@@ -1921,7 +1921,7 @@ dirty_ = true;
 return cgattr_->attr_rm_val_by_name((CON_ID)con, attr_s, val_s);
 }
 
-bool CG::rmAttrval(CONCEPT *con, _TCHAR *attr_s, long val)			// 05/19/00 AM.
+bool CG::rmAttrval(CONCEPT *con, _TCHAR *attr_s, long long val)			// 05/19/00 AM.
 {
 dirty_ = true;
 return cgattr_->attr_rm_val_by_name((CON_ID)con, attr_s, val);
@@ -2048,7 +2048,7 @@ dirty_ = true;																	// 05/12/00 AM.
 return addVal(con, attr, val);
 }
 
-bool CG::replaceVal(CONCEPT *con, _TCHAR *attr, long val)
+bool CG::replaceVal(CONCEPT *con, _TCHAR *attr, long long val)
 {
 rmVals(con, attr);															// 05/28/01 AM.
 dirty_ = true;																	// 05/12/00 AM.
@@ -2085,7 +2085,7 @@ return addVal(con, attr, newval);
 }
 
 // Multi-valued attr replacement.
-bool CG::replaceVal(CONCEPT *con, _TCHAR *attr, long oldval, long newval)
+bool CG::replaceVal(CONCEPT *con, _TCHAR *attr, long long oldval, long long newval)
 {
 if (!rmAttrval(con, attr, oldval))
 	return false;

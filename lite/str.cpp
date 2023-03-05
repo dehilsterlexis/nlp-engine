@@ -487,14 +487,7 @@ do {
 	c = iter.next();
 
 } while (c != icu::CharacterIterator::DONE); 
-/*
-while (*str)
-	{
-	if (!_istdigit((_TUCHAR)*str))
-		return false;
-	num = 10 * num + char_to_digit(*str++);
-	}
-*/
+
 return true;
 }
 
@@ -507,7 +500,7 @@ return true;
 *			All strings are unsigned.
 ********************************************/
 
-bool str_to_long(_TCHAR *str, /*UP*/ long &num)
+bool str_to_long(_TCHAR *str, /*UP*/ long long &num)
 {
 if (empty(str))
 	return false;
@@ -524,16 +517,13 @@ do {
 	c = iter.next();
 
 } while (c != icu::CharacterIterator::DONE); 
-/*
 
-while (*str)
-	{
-	if (!_istdigit((_TUCHAR)*str))
-		return false;
-	um = 10 * num + char_to_digit(*str++);n
-	}
-*/
 return true;
+}
+
+bool str_to_long(_TCHAR *str, /*UP*/ long &num) {
+	long long n = num;
+	return str_to_long(str,n);
 }
 
 
@@ -863,7 +853,7 @@ return true;
 *			All strings are unsigned.
 ********************************************/
 
-bool long_to_str(long num, /*UP*/ _TCHAR *buf)
+bool long_to_str(long long num, /*UP*/ _TCHAR *buf)
 {
 buf[0] = '\0';
 #ifndef LINUX

@@ -1702,7 +1702,7 @@ _tcscpy(val, ptr->v.vst);
 }
 
 
-void CG::popVal(VAL* &vals, /*UP*/ long &val)
+void CG::popVal(VAL* &vals, /*UP*/ long long &val)
 {
 val = -1;
 if (!vals)
@@ -1836,11 +1836,11 @@ return addVal(con, attr, val);
 }
 
 
-bool CG::addSval(CONCEPT *con, _TCHAR *attr, long val)
+bool CG::addSval(CONCEPT *con, _TCHAR *attr, long long val)
 {
 _TCHAR buf[256];
 dirty_ = true;																	// 05/12/00 AM.
-_stprintf(buf, _T("%ld"), val);
+_stprintf(buf, _T("%llu"), val);
 return addVal(con, attr, buf);
 }
 
@@ -1855,7 +1855,7 @@ return false;
 }
 
 // Add num value at end of attribute's values.
-bool CG::addVal(CONCEPT *conc, _TCHAR *attr, long val)
+bool CG::addVal(CONCEPT *conc, _TCHAR *attr, long long val)
 {
 dirty_ = true;																	// 05/12/00 AM.
 if (kbm_->attr_add_by_name((CON *) conc, attr, val))
@@ -1865,7 +1865,7 @@ return false;
 }
 
 // Add num value at end of attribute's values IF UNIQUE.
-bool CG::addValUnique(CONCEPT *conc, _TCHAR *attr, long val)
+bool CG::addValUnique(CONCEPT *conc, _TCHAR *attr, long long val)
 {
 dirty_ = true;
 if (!kbm_->attr_has_n_val((CON *) conc, attr, val)) {
@@ -2017,7 +2017,7 @@ dirty_ = true;
 return kbm_->attr_rm_val_by_name((CON *)con, attr_s, val_s);
 }
 
-bool CG::rmAttrval(CONCEPT *con, _TCHAR *attr_s, long val)			// 05/19/00 AM.
+bool CG::rmAttrval(CONCEPT *con, _TCHAR *attr_s, long long val)			// 05/19/00 AM.
 {
 dirty_ = true;
 return kbm_->attr_rm_val_by_name((CON *)con, attr_s, val);
@@ -2128,7 +2128,7 @@ dirty_ = true;																	// 05/12/00 AM.
 return addVal(con, attr, val);
 }
 
-bool CG::replaceVal(CONCEPT *con, _TCHAR *attr, long val)
+bool CG::replaceVal(CONCEPT *con, _TCHAR *attr, long long val)
 {
 rmVals(con, attr);															// 05/28/01 AM.
 dirty_ = true;																	// 05/12/00 AM.
@@ -2165,7 +2165,7 @@ return addVal(con, attr, newval);
 }
 
 // Multi-valued attr replacement.
-bool CG::replaceVal(CONCEPT *con, _TCHAR *attr, long oldval, long newval)
+bool CG::replaceVal(CONCEPT *con, _TCHAR *attr, long long oldval, long long newval)
 {
 if (!rmAttrval(con, attr, oldval))
 	return false;

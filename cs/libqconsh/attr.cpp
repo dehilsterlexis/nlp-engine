@@ -13,7 +13,7 @@ All rights reserved.
 *
 *******************************************************************************/
 /****************************************
-Copyright © 1995 by Conceptual Systems.
+Copyright ï¿½ 1995 by Conceptual Systems.
 Copyright (c) 1995 by Conceptual Systems.
 All rights reserved.
 *****************************************/
@@ -205,7 +205,7 @@ return val_pid;
 PTR_ID CGATTR::attr_add_by_name(
    CON_ID cid,
    _TCHAR *name,
-   long val)			// LONG value.
+   long long val)			// LONG value.
 {
 if (!cid || !name || !*name)
 	return 0;
@@ -1389,7 +1389,7 @@ return false;
 bool CGATTR::attr_rm_val_by_name(
    CON_ID cid,
    _TCHAR *attr_s,
-	long val
+	long long val
    )
 {
 if (!cid || !attr_s || !*attr_s)

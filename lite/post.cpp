@@ -1409,7 +1409,7 @@ if ((args = args->Right()))												// 12/14/99 AM.
 	}
 
 
-long num1, num2;
+long long num1, num2;
 switch (arg1->getType())
 	{
 	case IANUM:
@@ -3996,7 +3996,7 @@ Pn *npn;
 npn = nstart->getData();
 ndlist = npn->getDsem();
 
-long nval = 0;
+long long nval = 0;
 Var::val(nvar, ndlist, /*DU*/ nval);
 
 // Add node's var to the variable.
@@ -4157,7 +4157,7 @@ xdlist = xpn->getDsem();	// Context node's variable list.
 
 
 // Get xvar2 variable and value.
-long num = 0;
+long long num = 0;
 Var::val(xvar2, xdlist, /*DU*/ num);
 if (num)					// Value exists and is nonzero.
 	return true;		// Action succeeds anyway.

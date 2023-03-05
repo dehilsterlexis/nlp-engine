@@ -136,7 +136,7 @@ Iarg *arg;
 arg = ((Delt<Iarg>*)args)->getData();
 args = ((Delt<Iarg>*)args)->Right();		// Set up for next fetch of argument.
 
-long num;
+long long num;
 switch(arg->getType())													// 11/15/99 AM.
 	{
 	case IANUM:
@@ -193,7 +193,7 @@ bool Arg::num1(
 	_TCHAR *errstr,				// String for reporting errors.
 	/*DU*/
 	DELTS* &args,		// Remaining arguments in list.
-	long &num,					// Converted number.
+	long long &num,					// Converted number.
 	bool opt						// If arg is optional.	// 12/25/99 AM.
 	)
 {
@@ -234,6 +234,17 @@ switch (arg->getType())					// 11/15/99 AM.
 return true;
 }
 
+bool Arg::num1(
+	_TCHAR *errstr,				// String for reporting errors.
+	/*DU*/
+	DELTS* &args,		// Remaining arguments in list.
+	long &num,					// Converted number.
+	bool opt						// If arg is optional.	// 12/25/99 AM.
+	)
+{
+	long long n = num;
+	return Arg::num1(errstr,args,n,opt);
+}
 
 
 /********************************************
@@ -267,7 +278,7 @@ if (!args)
 Iarg *arg;
 arg = ((Delt<Iarg>*)args)->getData();
 args = ((Delt<Iarg>*)args)->Right();		// Set up for next fetch of argument.
-long numx = 0;
+long long numx = 0LL;
 switch (arg->getType())
 	{
 	case IAFLOAT:
@@ -481,11 +492,11 @@ bool Arg::str_or_num1(
 	/*DU*/
 	DELTS* &args,		// Remaining arguments in list.
 	_TCHAR* &str,					// Fetched string.
-	long &num					// Fetched num.
+	long long &num					// Fetched num.
 	)
 {
 str = 0;
-num = -1;
+num = -1LL;
 
 if (!args)
 	{
@@ -531,13 +542,13 @@ bool Arg::any1(
 	/*DU*/
 	DELTS* &args,		// Remaining arguments in list.
 	_TCHAR* &str,					// Fetched string.
-	long &num,					// Fetched num.
+	long long &num,					// Fetched num.
 	float &fnum, // 12/15/14 AM.
 	RFASem* &sem				// Fetched sem.
 	)
 {
 str = 0;
-num = -1;
+num = -1LL;
 fnum = -1.0; // 12/15/14 AM.
 sem = 0;
 
@@ -605,7 +616,7 @@ bool Arg::any1(
 	DELTS* &args,		// Remaining arguments in list.
 	enum Iargtype &typ,		// Type of data returned.
 	_TCHAR* &str,					// Fetched string.
-	long &num,					// Fetched num.
+	long long &num,					// Fetched num.
 	float &flt,					// Fetched float.
 	RFASem* &sem				// Fetched sem.
 	)

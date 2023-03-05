@@ -55,7 +55,7 @@ public:
 	bool attr_rename(PTR_ID,_TCHAR*);
 	PTR_ID attr_add_by_name(CON_ID ,_TCHAR*,_TCHAR*);
 	PTR_ID attr_add_by_name_s(CON_ID,_TCHAR*,STR_ID);	// 02/16/07 AM.
-	PTR_ID attr_add_by_name(CON_ID ,_TCHAR*,long);
+	PTR_ID attr_add_by_name(CON_ID ,_TCHAR*,long long);
 	PTR_ID attr_add_by_name(CON_ID ,_TCHAR*,float);
 	PTR_ID attr_add_by_name(CON_ID ,_TCHAR*,CON_ID );
 	PTR_ID attr_add_by_name(XCON_S*,_TCHAR*,CON_ID);	// 02/16/07 AM.
@@ -146,7 +146,7 @@ public:
 	attr_rm_val_by_name(
 		CON_ID con,
 		_TCHAR *attr_s,
-		long val
+		long long val
 		);
 	bool
 	attr_rm_val_by_name(

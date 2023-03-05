@@ -118,7 +118,7 @@ return ptr;
 PTR *AKBM::attr_add_by_name(
    CON *con,
    _TCHAR *name,
-   long val)			// LONG value.
+   long long val)			// LONG value.
 {
 if (!con || !name || !*name)
 	return PNULL;
@@ -1396,7 +1396,7 @@ return true;
 bool AKBM::attr_rm_val_by_name(
    CON *con,
    _TCHAR *attr_s,
-	long val
+	long long val
    )
 {
 if (!con || !attr_s || !*attr_s

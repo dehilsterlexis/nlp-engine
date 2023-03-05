@@ -65,15 +65,15 @@ public:
 	bool getCMLpagetag();		// Get CML line with HTML tag.
 	bool getCMLblank();			// Get blank CML line.
 
-	bool readCMLpagetag(long&,bool&);		// Process CML page tag line.
+	bool readCMLpagetag(long long&,bool&);		// Process CML page tag line.
 
 	inline bool getCMLnum(
-		long &field			// CML field to fill.
+		long long &field			// CML field to fill.
 		);
 
 	bool skipBlanks();
 
-	Node<Pn> *makePagenode(long);	// Build a page node.
+	Node<Pn> *makePagenode(long long);	// Build a page node.
 	Node<Pn> *makeLinenode();		// Build a line node.
 	Node<Pn> *makeWordnode();		// Build a word node.
 
@@ -95,7 +95,7 @@ public:
 	inline bool replaceNum(
 		Node<Pn> *node,
 		_TCHAR *name,	// variable name.
-		long val
+		long long val
 		);
 	inline bool replaceStr(	// 08/30/08 AM.
 		Node<Pn> *node,
@@ -114,15 +114,15 @@ private:
 	_TCHAR *text_;				// Start of the input text buffer.
 	Htab *htab_;				// Convenience ptr to hash table.
 
-	long topos_;				// "To" position in text buffer.
-	long fmpos_;				// "From" position in text buffer.
+	long long topos_;				// "To" position in text buffer.
+	long long fmpos_;				// "From" position in text buffer.
 	_TCHAR *toptr_;			// "To" text buffer pointer.
 	_TCHAR *fmptr_;			// "From" text buffer pointer.
 
-	long toupos_;	// [UNICODE]	// 06/15/22 AM.
-	long fmupos_;	// [UNICODE]	// 06/15/22 AM.
+	long long toupos_;	// [UNICODE]	// 06/15/22 AM.
+	long long fmupos_;	// [UNICODE]	// 06/15/22 AM.
 
-	long lineno_;				// Track line number in input text buffer.
+	long long lineno_;				// Track line number in input text buffer.
 
 	Node<Pn> *root_;			// Root node of parse tree.
 	Node<Pn> *page_;			// Current page node.
@@ -131,24 +131,24 @@ private:
 	Node<Pn> *tok_;			// Current literal token node.
 	
 	// CML data per word.
-	long Z_;		// Zone number.
-	long L1_;		// Line number. (Tracks "output" plain text line number.)
-	long W1_;		// First word number.
-	long L_;			// Left text box offset.
-	long T_;			// Top text box offset.
-	long W_;			// Width text box offset.
-	long H_;			// Height text box offset.
-	long C_;			// Confidence value. (ignoring this one).
+	long long Z_;		// Zone number.
+	long long L1_;		// Line number. (Tracks "output" plain text line number.)
+	long long W1_;		// First word number.
+	long long L_;			// Left text box offset.
+	long long T_;			// Top text box offset.
+	long long W_;			// Width text box offset.
+	long long H_;			// Height text box offset.
+	long long C_;			// Confidence value. (ignoring this one).
 	
-	long P_;			// Track the CML page number.
+	long long P_;			// Track the CML page number.
 
 	// Track previous zone and line.
-	long prevZ_;	// Prior zone number.
-	long prevL1_;	// Prior line number.
+	long long prevZ_;	// Prior zone number.
+	long long prevL1_;	// Prior line number.
 	
-	long lineR_;	// Prior (L_ + W_).
-	long gapL_;		// Left of largest gap on line.
-	long gapR_;		// Right of largest gap on line.
+	long long lineR_;	// Prior (L_ + W_).
+	long long gapL_;		// Left of largest gap on line.
+	long long gapR_;		// Right of largest gap on line.
 	
 	// Data for word.
 	Node<Pn> *firsttok_;	// Track word node's first token.
@@ -158,30 +158,30 @@ private:
 	// Data for tok.
 
 	// Data for word.
-	long wlen_;						// Number of characters in word.
-	long wbars_;					// Number of barcode chars in word.
-	long walphas_;					// Number of alphabetic chars in word.
-	long wnums_;					// Number of digits in word.
-	long wpuncts_;					// Number of punctuation chars in line.
+	long long wlen_;						// Number of characters in word.
+	long long wbars_;					// Number of barcode chars in word.
+	long long walphas_;					// Number of alphabetic chars in word.
+	long long wnums_;					// Number of digits in word.
+	long long wpuncts_;					// Number of punctuation chars in line.
 
 	// Data for line.
-	long llen_;						// Number of characters in line.
-	long lbars_;					// Number of barcode chars in line.
-	long lalphas_;					// Number of alphabetic chars in line.
-	long lnums_;					// Number of digits in line.
-	long lpuncts_;					// Number of punctuation chars in line.
+	long long llen_;						// Number of characters in line.
+	long long lbars_;					// Number of barcode chars in line.
+	long long lalphas_;					// Number of alphabetic chars in line.
+	long long lnums_;					// Number of digits in line.
+	long long lpuncts_;					// Number of punctuation chars in line.
 	_TCHAR *lfirst_;				// First in line: "upper","cap","lower","num","punct","ctrl".
 	_TCHAR *llast_;				// Last in line: "upper","cap","lower","num","punct","ctrl".
-	long llasteos_;				// 1 if last in line is end-of-sentence char.
-	long llastcolon_;				// 1 if last in line is a colon.
+	long long llasteos_;				// 1 if last in line is end-of-sentence char.
+	long long llastcolon_;				// 1 if last in line is a colon.
 
-	long lwords_;					// Number of (CML) words (or "blobs") in line.
-	long ltoks_;					// Number of tokens (lexemes) in line.
-	long luppers_;					// Number of uppercase TOKS in line.
-	long lcaps_;					// Number of cap TOKS in line.
-	long llowers_;					// Number of lowercase TOKS in line.
-	long lknowns_;					// Number of known words in line.
-	long lunks_;					// Number of unknown words in line.
+	long long lwords_;					// Number of (CML) words (or "blobs") in line.
+	long long ltoks_;					// Number of tokens (lexemes) in line.
+	long long luppers_;					// Number of uppercase TOKS in line.
+	long long lcaps_;					// Number of cap TOKS in line.
+	long long llowers_;					// Number of lowercase TOKS in line.
+	long long lknowns_;					// Number of known words in line.
+	long long lunks_;					// Number of unknown words in line.
 
 	// Data for page.
 

@@ -28,6 +28,7 @@ LITE_API _TCHAR to_upper(_TCHAR ch);											// 12/16/01 AM.
 LITE_API _TCHAR to_lower(_TCHAR ch);											// 12/16/01 AM.
 
 bool str_to_int(_TCHAR *, /*UP*/ int &);
+bool str_to_long(_TCHAR *, /*UP*/ long long &);
 bool str_to_long(_TCHAR *, /*UP*/ long &);
 inline int char_to_digit(_TCHAR ch);
 bool all_uppercase(_TCHAR *str);
@@ -42,7 +43,7 @@ bool zap_final_white(_TCHAR *str);										// 02/12/99 AM.
 
 bool str_equal(_TCHAR *str1, _TCHAR *str2);							// 06/07/99 AM.
 
-bool long_to_str(long num, /*UP*/ _TCHAR *buf);					// 11/03/99 AM.
+bool long_to_str(long long num, /*UP*/ _TCHAR *buf);					// 11/03/99 AM.
 
 bool str_to_cstr(															// 12/15/99 AM.
 	_TCHAR *str,			// String to convert.

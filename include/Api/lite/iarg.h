@@ -36,7 +36,7 @@ enum LITE_API Iargtype
 union LITE_API Iargval
 	{
 	_TCHAR *str_;
-	long num_;
+	long long num_;
 	std::_t_ostream *out_;		// 02/09/99 AM.
 	RFASem *sem_;		// 02/16/00 AM.
 	float float_;		// 08/17/01 AM.
@@ -56,6 +56,7 @@ class LITE_API Iarg
 public:
 	Iarg(enum Iargtype = IANULL);	// Default constructor.
 	Iarg(_TCHAR *);
+	Iarg(long long);
 	Iarg(long);
 	Iarg(RFASem *);															// 02/16/00 AM.
 	Iarg(RFASem *, enum Iargtype);										// 05/26/02 AM.
@@ -86,12 +87,12 @@ public:
 	// <TYPE> getData();				// Each derived class should define this.
 	enum Iargtype getType();
 	_TCHAR *getStr();
-	long getNum();
+	long long getNum();
 	std::_t_ostream *getOstream();													// 02/09/99 AM.
 	RFASem *getSem();															// 02/16/00 AM.
 	float getFloat();															// 08/17/01 AM.
 
-	long *getNumaddr();														// 06/08/02 AM.
+	long long *getNumaddr();														// 06/08/02 AM.
 	float *getFloataddr();													// 06/08/02 AM.
 
 	// Modify
@@ -106,7 +107,7 @@ public:
 	// General
 
 	// Fetch a number from arg.  If string, try to convert.		// 11/09/99 AM.
-	bool fetchNum(/*UP*/ long &num);										// 11/09/99 AM.
+	bool fetchNum(/*UP*/ long long &num);										// 11/09/99 AM.
 
 	// Class-wide
 

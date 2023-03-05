@@ -4479,7 +4479,7 @@ if (len1 < 0 || len2 < 0 || (len1 > len2))				// FIX.	// 06/24/02 AM.
 
 Pn *pn = Pat::leafNode(nlppp->node_)->getData();
 
-long num = 0;
+long long num = 0;
 _TCHAR *str;
 str = pn->getName();
 if (!str_to_long(str, /*UP*/ num))
@@ -7307,7 +7307,7 @@ if (!pair)
 // Case of NULL val.												// FIX.	// 04/28/01 AM.
 if (!val)															// FIX.	// 04/28/01 AM.
 	{
-	Var::setVal(pair, (long) 0);								// FIX.	// 04/28/01 AM.
+	Var::setVal(pair, 0LL);								// FIX.	// 04/28/01 AM.
 	return 0;														// FIX.	// 04/28/01 AM.
 	}
 
@@ -7381,13 +7381,13 @@ switch(val->getType())
 return val;
 }
 
-long Arun::assign(
+long long Arun::assign(
 	int typ,
 	_TCHAR *varname,
 	int nelt,
 	long index,
 	Nlppp *nlppp,
-	long val)
+	long long val)
 {
 if (index >= 0)																// 03/11/02 AM.
 	return iassign(typ,varname,nelt,index,nlppp,val);				// 03/11/02 AM.
@@ -7483,7 +7483,7 @@ if (!pair)
 	return val;
 
 // Note: this also trashes the old values.
-Var::setVal(pair, (val ? (long)1 : (long)0));	// No boolean vars yet.
+Var::setVal(pair, (val ? 1LL : 0LL));	// No boolean vars yet.
 return val;
 }
 
@@ -7508,13 +7508,13 @@ if (!flag)
 return assign(typ,varname,nelt,index,nlppp,val);
 }
 
-long Arun::assign(															// 05/04/01 AM.
+long long Arun::assign(															// 05/04/01 AM.
 	int typ,
 	_TCHAR *varname,
 	int nelt,
 	RFASem *index_sem,
 	Nlppp *nlppp,
-	long val
+	long long val
 	)
 {
 if (!index_sem)
@@ -7643,7 +7643,7 @@ if (!val)
 	return 0;	// Assign-to place is already nulled, so done.
 
 RFASem *nval = 0;
-long numx;
+long long numx;
 CG *cg = nlppp->parse_->getAna()->getCG();
 switch(val->getType())
 	{
@@ -7719,13 +7719,13 @@ switch(val->getType())
 return val;
 }
 
-long Arun::iassign(
+long long Arun::iassign(
 	int typ,
 	_TCHAR *varname,
 	int nelt,
 	long index,
 	Nlppp *nlppp,
-	long val)
+	long long val)
 {
 Ipair *pair;
 Ivar::getVar((enum Ivartype)typ,varname,nelt,nlppp,/*UP*/pair);
@@ -7890,7 +7890,7 @@ return val;
 *			05/27/00 AM. Delete sem structure here.
 ********************************************/
 
-bool Arun::truth(long val)
+bool Arun::truth(long long val)
 {
 return (val ? true : false);
 }
@@ -7927,7 +7927,7 @@ return flag;
 * NOTE:	08/17/01 AM. Handling float also.
 ********************************************/
 
-RFASem *Arun::plus(RFASem *sem1, long num, Nlppp *nlppp)
+RFASem *Arun::plus(RFASem *sem1, long long num, Nlppp *nlppp)
 {
 RFASem *sem=0;																	// 08/17/01 AM.
 
@@ -7936,7 +7936,7 @@ switch (sem1->getType())													// 08/17/01 AM.
 	{
 	case RSLONG:																// 08/17/01 AM.
 		{
-		long res = sem1->getLong() + num;
+		long long res = sem1->getLong() + num;
 		delete sem1;				// Memory leak.						// 05/27/00 AM.
 		sem = new RFASem(res);												// 08/17/01 AM.
 		}
@@ -7956,7 +7956,7 @@ switch (sem1->getType())													// 08/17/01 AM.
 			if (nm)													// FIX.	// 07/11/03 AM.
 				return new RFASem(nm,RSSTR);					// FIX.	// 07/11/03 AM.
 			else
-				return new RFASem((long)0);			// NULL STR.	// 07/11/03 AM.
+				return new RFASem(0LL);			// NULL STR.	// 07/11/03 AM.
 			}
 		// FALL THROUGH!!														// 07/11/03 AM.
 	default:																		// 08/17/01 AM.
@@ -7967,7 +7967,7 @@ switch (sem1->getType())													// 08/17/01 AM.
 		return 0;
 	}
 else if (num == 0)	// NULL-NULL case.					// FIX.	// 07/11/03 AM.
-	return new RFASem((long)0);								// FIX.	// 07/11/03 AM.
+	return new RFASem(0LL);								// FIX.	// 07/11/03 AM.
 else																				// 03/13/02 AM.
 	{
 	std::_t_strstream gerrStr;						// 03/13/02 AM.
@@ -8054,14 +8054,14 @@ if (!sem1 && !sem2)												// FIX	// 08/10/08 AM.
 	return 0;														// FIX	// 08/10/08 AM.
 
 if (!sem1)															// FIX	// 08/10/08 AM.
-	return plus((long)0,sem2,nlppp);							// FIX	// 08/10/08 AM.
+	return plus(0LL,sem2,nlppp);							// FIX	// 08/10/08 AM.
 if (!sem2)
-	return plus(sem1,(long)0,nlppp);							// FIX	// 08/10/08 AM.
+	return plus(sem1,0LL,nlppp);							// FIX	// 08/10/08 AM.
 
 //if (!sem1 || !sem2)															// 05/21/01 AM.
 
 bool ok = true;
-long num = 0L;													// FIX			// 08/17/01 AM.
+long long num = 0L;													// FIX			// 08/17/01 AM.
 float fnum;																		// 08/17/01 AM.
 _TCHAR *str;
 //char buf[MAXSTR];
@@ -8169,7 +8169,7 @@ Chars::destroy(buf);															// 07/16/03 AM.
 return newstr;
 }
 
-_TCHAR *Arun::plus(_TCHAR*str1, long num, Nlppp *nlppp)				// 07/11/03 AM.
+_TCHAR *Arun::plus(_TCHAR*str1, long long num, Nlppp *nlppp)				// 07/11/03 AM.
 {
 // Assume string is interned.
 if (num != 0)
@@ -8182,7 +8182,7 @@ if (num != 0)
 return str1;
 }
 
-_TCHAR *Arun::plus(long num, _TCHAR *str1, Nlppp *nlppp)				// 07/11/03 AM.
+_TCHAR *Arun::plus(long long num, _TCHAR *str1, Nlppp *nlppp)				// 07/11/03 AM.
 {
 // Assume string is interned.
 if (num != 0)
@@ -8226,12 +8226,12 @@ delete sem;				// Memory leak.									// 05/27/00 AM.
 return newstr;
 }
 
-long Arun::plus(long num1, long num2, Nlppp *nlppp)
+long long Arun::plus(long long num1, long long num2, Nlppp *nlppp)
 {
 return num1 + num2;
 }
 
-RFASem *Arun::plus(long num, RFASem *sem2, Nlppp *nlppp)
+RFASem *Arun::plus(long long num, RFASem *sem2, Nlppp *nlppp)
 {
 RFASem *sem = 0;																// 08/17/01 AM.
 
@@ -8241,7 +8241,7 @@ if (sem2)																		// 03/13/02 AM.
 		{
 		case RSLONG:															// 08/17/01 AM.
 			{
-			long res = sem2->getLong() + num;
+			long long res = sem2->getLong() + num;
 			sem = new RFASem(res);											// 08/17/01 AM.
 			}
 			break;																// 08/17/01 AM.
@@ -8259,7 +8259,7 @@ if (sem2)																		// 03/13/02 AM.
 				if (st && *st)										// FIX.	// 07/11/03 AM.
 					return new RFASem(st,RSSTR);				// FIX.	// 07/11/03 AM.
 				else
-					return new RFASem((long)0);				// FIX.	// 07/11/03 AM.
+					return new RFASem(0LL);				// FIX.	// 07/11/03 AM.
 				}
 			// FALL THROUGH.													// 07/11/03 AM.
 		default:																	// 08/17/01 AM.
@@ -8310,12 +8310,12 @@ else																				// 03/13/02 AM.
 return res;
 }
 
-float Arun::plus(float num1, long num2, Nlppp *nlppp)				// 08/17/01 AM.
+float Arun::plus(float num1, long long num2, Nlppp *nlppp)				// 08/17/01 AM.
 {
 return num1 + (float)num2;
 }
 
-float Arun::plus(long num1, float num2, Nlppp *nlppp)				// 08/17/01 AM.
+float Arun::plus(long long num1, float num2, Nlppp *nlppp)				// 08/17/01 AM.
 {
 return (float)num1 + num2;
 }
@@ -8333,7 +8333,7 @@ return num1 + num2;
 * NOTE:	UNARY.
 ********************************************/
 
-long Arun::plus(long num, Nlppp *nlppp)
+long long Arun::plus(long long num, Nlppp *nlppp)
 {
 return num;	// no-op.
 }
@@ -8353,7 +8353,7 @@ if (sem1)																		// 03/13/02 AM.
 		{
 		case RSLONG:
 			{
-			long num = sem1->sem_to_long(ok);							// 04/28/01 AM.
+			long long num = sem1->sem_to_long(ok);							// 04/28/01 AM.
 			sem = new RFASem(num);
 			}
 			break;
@@ -8431,7 +8431,7 @@ if (str && *str																// 04/30/01 AM.
 return ostr;
 }
 
-std::_t_ostream *Arun::out(_TCHAR *fname, long num, Nlppp *nlppp)
+std::_t_ostream *Arun::out(_TCHAR *fname, long long num, Nlppp *nlppp)
 {
 Ipair *pair;
 std::_t_ostream *ostr = 0;
@@ -8662,7 +8662,7 @@ delete ostrsem;																// 08/19/01 AM.
 return ostr;																	// 08/19/01 AM.
 }
 
-std::_t_ostream *Arun::out(RFASem *ostrsem, long num, Nlppp *nlppp)
+std::_t_ostream *Arun::out(RFASem *ostrsem, long long num, Nlppp *nlppp)
 {
 if (!ostrsem)
 	return 0;
@@ -8907,7 +8907,7 @@ if (str && *str																// 04/30/01 AM.
 return ostr;
 }
 
-std::_t_ostream *Arun::out(std::_t_ostream *ostr, long num, Nlppp *nlppp)
+std::_t_ostream *Arun::out(std::_t_ostream *ostr, long long num, Nlppp *nlppp)
 {
 if (ostr)																		// 08/04/02 AM.
 	*ostr << num;
@@ -8954,7 +8954,7 @@ return true;
 }
 
 
-bool Arun::stmt(long num)
+bool Arun::stmt(long long num)
 {
 return num ? true : false;
 }
@@ -8982,7 +8982,7 @@ return flg;																		// 09/03/01 AM.
 * SUBJ:	NLP++ '-' operator, compiled runtime.
 ********************************************/
 
-RFASem *Arun::minus(RFASem *sem1, long num)
+RFASem *Arun::minus(RFASem *sem1, long long num)
 {
 RFASem *sem=0;																	// 08/17/01 AM.
 if (!sem1)																		// 03/13/02 AM.
@@ -8994,7 +8994,7 @@ switch (sem1->getType())													// 08/17/01 AM.
 	{
 	case RSLONG:																// 08/17/01 AM.
 		{
-		long res = sem1->getLong() - num;
+		long long res = sem1->getLong() - num;
 		sem = new RFASem(res);												// 08/17/01 AM.
 		}
 		break;
@@ -9045,7 +9045,7 @@ return res;
 RFASem *Arun::minus(RFASem *sem1, RFASem *sem2)
 {
 bool ok = true;
-long num = 0L;															// FIX	// 08/17/01 AM.
+long long num = 0L;															// FIX	// 08/17/01 AM.
 float fnum;																		// 08/17/01 AM.
 RFASem *sem=0;																	// 08/17/01 AM.
 if (!sem1 && !sem2)															// 03/13/02 AM.
@@ -9157,19 +9157,19 @@ return sem;																		// 08/17/01 AM.
 }
 
 
-long Arun::minus(long num1, long num2)
+long long Arun::minus(long long num1, long long num2)
 {
 return num1 - num2;
 }
 
-RFASem *Arun::minus(long num, RFASem *sem2)
+RFASem *Arun::minus(long long num, RFASem *sem2)
 {
 RFASem *sem=0;																	// 08/17/01 AM.
 switch (sem2->getType())													// 08/17/01 AM.
 	{
 	case RSLONG:																// 08/17/01 AM.
 		{
-		long res = num - sem2->getLong();
+		long long res = num - sem2->getLong();
 		sem = new RFASem(res);												// 08/17/01 AM.
 		}
 		break;
@@ -9216,12 +9216,12 @@ delete sem2;
 return res;
 }
 
-float Arun::minus(float fnum1, long num2)
+float Arun::minus(float fnum1, long long num2)
 {
 return fnum1 - (float) num2;
 }
 
-float Arun::minus(long num1, float fnum2)
+float Arun::minus(long long num1, float fnum2)
 {
 return (float) num1 - fnum2;
 }
@@ -9238,7 +9238,7 @@ return fnum1 - fnum2;
 * NOTE:	Unary.
 ********************************************/
 
-long Arun::minus(long num)
+long long Arun::minus(long long num)
 {
 return -num;
 }
@@ -9254,7 +9254,7 @@ RFASem *sem=0;																	// 08/18/01 AM.
 bool ok = true;																// 04/28/01 AM.
 if (!sem1)																		// 03/13/02 AM.
 	{
-	sem = new RFASem((long)0);												// 03/13/02 AM.
+	sem = new RFASem(0LL);												// 03/13/02 AM.
 	return sem;																	// 03/13/02 AM.
 	}
 
@@ -9262,7 +9262,7 @@ switch (sem1->getType())													// 08/18/01 AM.
 	{
 	case RSLONG:
 		{
-		long num = sem1->sem_to_long(ok);								// 04/28/01 AM.
+		long long num = sem1->sem_to_long(ok);								// 04/28/01 AM.
 		sem = new RFASem(-num);
 		}
 		break;
@@ -9290,19 +9290,19 @@ return sem;
 * SUBJ:	NLP++ '*' operator, compiled runtime.
 ********************************************/
 
-RFASem *Arun::times(RFASem *sem1, long num)							// 08/17/01 AM.
+RFASem *Arun::times(RFASem *sem1, long long num)							// 08/17/01 AM.
 {
 RFASem *sem=0;
 if (!sem1)																		// 03/13/02 AM.
 	{
-	sem = new RFASem((long)0);												// 03/13/02 AM.
+	sem = new RFASem(0LL);												// 03/13/02 AM.
 	return sem;																	// 03/13/02 AM.
 	}
 switch (sem1->getType())
 	{
 	case RSLONG:
 		{
-		long res = sem1->getLong() * num;
+		long long res = sem1->getLong() * num;
 		sem = new RFASem(res);
 		}
 		break;
@@ -9363,7 +9363,7 @@ if (sem1 && sem2)																// 03/13/02 AM.
 			{
 			case RSLONG:
 				{
-				long num = sem1->getLong() * sem2->getLong();
+				long long num = sem1->getLong() * sem2->getLong();
 				sem = new RFASem(num);
 				}
 				break;
@@ -9423,19 +9423,19 @@ if (!ok)
 	std::_t_strstream gerrStr;
 	gerrStr << _T("[Error: Bad types in '*' operation.]") << std::ends;
 	errOut(&gerrStr,false);
-	sem = new RFASem((long) 0);	// Recover.							// 03/13/02 AM.
+	sem = new RFASem(0LL);	// Recover.							// 03/13/02 AM.
 	}
 
 return sem;
 }
 
 
-long Arun::times(long num1, long num2)
+long long Arun::times(long long num1, long long num2)
 {
 return num1 * num2;
 }
 
-RFASem *Arun::times(long num, RFASem *sem2)
+RFASem *Arun::times(long long num, RFASem *sem2)
 {
 RFASem *sem =0;
 if (!sem2)																		// 03/13/02 AM.
@@ -9445,7 +9445,7 @@ switch (sem2->getType())
 	{
 	case RSLONG:
 		{
-		long res = num * sem2->getLong();
+		long long res = num * sem2->getLong();
 		sem = new RFASem(res);
 		}
 		break;
@@ -9491,12 +9491,12 @@ delete sem2;
 return res;
 }
 
-float Arun::times(float fnum1, long num2)
+float Arun::times(float fnum1, long long num2)
 {
 return fnum1 * (float) num2;
 }
 
-float Arun::times(long num1, float fnum2)
+float Arun::times(long long num1, float fnum2)
 {
 return (float) num1 * fnum2;
 }
@@ -9512,7 +9512,7 @@ return fnum1 * fnum2;
 * SUBJ:	NLP++ '/' operator, compiled runtime.
 ********************************************/
 
-RFASem *Arun::divide(RFASem *sem1, long num)
+RFASem *Arun::divide(RFASem *sem1, long long num)
 {
 RFASem *sem=0;
 if (!num)																		// 03/13/02 AM.
@@ -9531,7 +9531,7 @@ switch (sem1->getType())
 	{
 	case RSLONG:
 		{
-		long res = sem1->getLong() / num;
+		long long res = sem1->getLong() / num;
 		sem = new RFASem(res);
 		}
 		break;
@@ -9614,14 +9614,14 @@ if (!sem2)																		// 03/13/02 AM.
 	errOut(&gerrStr,false);																// 03/13/02 AM.
 	if (sem1)																	// 03/13/02 AM.
 		delete sem1;															// 03/13/02 AM.
-	sem = new RFASem((long)0);												// 03/13/02 AM.
+	sem = new RFASem(0LL);												// 03/13/02 AM.
 	return sem;																	// 03/13/02 AM.
 	}
 if (!sem1)																		// 03/13/02 AM.
 	{
 	if (sem2)																	// 03/13/02 AM.
 		delete sem2;															// 03/13/02 AM.
-	sem = new RFASem((long)0);												// 03/13/02 AM.
+	sem = new RFASem(0LL);												// 03/13/02 AM.
 	return sem;																	// 03/13/02 AM.
 	}
 
@@ -9632,7 +9632,7 @@ switch (sem1->getType())
 			{
 			case RSLONG:
 				{
-				long num = sem1->getLong() / sem2->getLong();
+				long long num = sem1->getLong() / sem2->getLong();
 				sem = new RFASem(num);
 				}
 				break;
@@ -9685,12 +9685,12 @@ return sem;
 }
 
 
-long Arun::divide(long num1, long num2)
+long long Arun::divide(long long num1, long long num2)
 {
 return num1 / num2;
 }
 
-RFASem *Arun::divide(long num, RFASem *sem2)
+RFASem *Arun::divide(long long num, RFASem *sem2)
 {
 RFASem *sem=0;
 if (!sem2)																		// 03/13/02 AM.
@@ -9705,7 +9705,7 @@ switch (sem2->getType())
 	{
 	case RSLONG:
 		{
-		long res = num / sem2->getLong();
+		long long res = num / sem2->getLong();
 		sem = new RFASem(res);
 		}
 		break;
@@ -9762,12 +9762,12 @@ delete sem2;
 return 0.0;
 }
 
-float Arun::divide(float fnum1, long num2)
+float Arun::divide(float fnum1, long long num2)
 {
 return fnum1 / (float) num2;
 }
 
-float Arun::divide(long num1, float fnum2)
+float Arun::divide(long long num1, float fnum2)
 {
 return (float) num1 / fnum2;
 }
@@ -9783,7 +9783,7 @@ return fnum1 / fnum2;
 * SUBJ:	NLP++ '%' operator, compiled runtime.
 ********************************************/
 
-long Arun::rem(RFASem *sem, long num)
+long long Arun::rem(RFASem *sem, long long num)
 {
 if (!sem)																		// 03/13/02 AM.
 	{
@@ -9798,16 +9798,16 @@ if (sem->getType() != RSLONG)
 	delete sem;
 	return 0;
 	}
-long res = sem->getLong() % num;
+long long res = sem->getLong() % num;
 delete sem;
 return res;
 }
 
 
-long Arun::rem(RFASem *sem1, RFASem *sem2)
+long long Arun::rem(RFASem *sem1, RFASem *sem2)
 {
 bool ok = true;
-long num = 0L;															// FIX	// 08/17/01 AM.
+long long num = 0L;															// FIX	// 08/17/01 AM.
 if (!sem2 || !sem1)															// 03/13/02 AM.
 	{
 	if (sem1)																	// 03/13/02 AM.
@@ -9845,12 +9845,12 @@ return num;
 }
 
 
-long Arun::rem(long num1, long num2)
+long long Arun::rem(long long num1, long long num2)
 {
 return num1 % num2;
 }
 
-long Arun::rem(long num, RFASem *sem)
+long long Arun::rem(long long num, RFASem *sem)
 {
 if (!sem)																		// 03/13/02 AM.
 	return 0;																	// 03/13/02 AM.
@@ -9862,7 +9862,7 @@ if (sem->getType() != RSLONG)
 	delete sem;
 	return 0;
 	}
-long res = num % sem->getLong();
+long long res = num % sem->getLong();
 delete sem;
 return res;
 }
@@ -9874,7 +9874,7 @@ return res;
 * SUBJ:	NLP++ '%%' operator, compiled runtime.
 ********************************************/
 
-long Arun::conf(RFASem *sem, long num)
+int Arun::conf(RFASem *sem, long long num)
 {
 if (!sem)																		// 03/13/02 AM.
 	return 0;																	// 03/13/02 AM.
@@ -9887,17 +9887,17 @@ if (sem->getType() != RSLONG)
 	delete sem;
 	return 0;
 	}
-long res = confidence(sem->getLong(), num);
+int res = confidence(sem->getLong(), num);
 delete sem;
 return res;
 }
 
 
-long Arun::conf(RFASem *sem1, RFASem *sem2)
+int Arun::conf(RFASem *sem1, RFASem *sem2)
 {
 RFASem *sem=0;				// New sem.
 bool ok = true;
-long num = 0L;															// FIX	// 08/17/01 AM.
+int num = 0;															// FIX	// 08/17/01 AM.
 if (!sem1 || !sem2)															// 03/13/02 AM.
 	{
 	if (sem1)																	// 03/13/02 AM.
@@ -9935,12 +9935,12 @@ return num;
 }
 
 
-long Arun::conf(long num1, long num2)
+int Arun::conf(long long num1, long long num2)
 {
 return confidence(num1, num2);
 }
 
-long Arun::conf(long num, RFASem *sem)
+int Arun::conf(long long num, RFASem *sem)
 {
 if (!sem)																		// 03/13/02 AM.
 	return 0;																	// 03/13/02 AM.
@@ -9953,7 +9953,7 @@ if (sem->getType() != RSLONG)
 	delete sem;
 	return 0;
 	}
-long res = confidence(num, sem->getLong());
+long long res = confidence(num, sem->getLong());
 delete sem;
 return res;
 }
@@ -9965,9 +9965,9 @@ return res;
 * SUBJ:	NLP++ '==' operator, compiled runtime.
 ********************************************/
 
-long Arun::eq(RFASem *sem, long num)
+int Arun::eq(RFASem *sem, long long num)
 {
-long res;
+int res;
 if (!sem)																		// 03/13/02 AM.
 	return (num ? 0 : 1);										// FIX.	// 12/12/02 AM.
 //	return 0;																	// 03/13/02 AM.
@@ -10041,9 +10041,9 @@ delete sem;
 return res;
 }
 
-long Arun::eq(RFASem *sem, float num)									// 08/18/01 AM.
+int Arun::eq(RFASem *sem, float num)									// 08/18/01 AM.
 {
-long res;
+int res;
 if (!sem)																		// 03/13/02 AM.
 	return 0;																	// 03/13/02 AM.
 
@@ -10067,7 +10067,7 @@ return res;
 }
 
 
-long Arun::eq(RFASem *sem, _TCHAR *str)
+int Arun::eq(RFASem *sem, _TCHAR *str)
 {
 if (!sem)																		// 03/13/02 AM.
 	return 0;																	// 03/13/02 AM.
@@ -10100,24 +10100,24 @@ switch (sem->getType())
 		delete sem;
 		return 0;
 	}
-long res = eq(sem->getName(), str);
+int res = eq(sem->getName(), str);
 delete sem;
 return res;
 }
 
-long Arun::eq(RFASem *sem1, RFASem *sem2)
+int Arun::eq(RFASem *sem1, RFASem *sem2)
 {
 bool ok = true;
-long num = 0L;															// FIX	// 08/17/01 AM.
+int num = 0;															// FIX	// 08/17/01 AM.
 if (!sem1 && !sem2)												// FIX.	// 07/04/06 AM.
 	return 1;																	// 07/04/06 AM.
 if (!sem1 || !sem2)															// 03/13/02 AM.
 	{
 	if (sem1)																	// 03/13/02 AM.
-		return eq(sem1,(long)0);	// Deletes sem.		// FIX.	// 07/04/06 AM.
+		return eq(sem1,0LL);	// Deletes sem.		// FIX.	// 07/04/06 AM.
 //		delete sem1;															// 03/13/02 AM.
 	if (sem2)																	// 03/13/02 AM.
-		return eq(sem2,(long)0);	// Deletes sem.		// FIX.	// 07/04/06 AM.
+		return eq(sem2,0LL);	// Deletes sem.		// FIX.	// 07/04/06 AM.
 //		delete sem2;															// 03/13/02 AM.
 	return 0;																	// 03/13/02 AM.
 	}
@@ -10319,19 +10319,19 @@ return num;
 }
 
 
-long Arun::eq(long num1, long num2)
+int Arun::eq(long long num1, long long num2)
 {
 return num1 == num2;
 }
 
 
-long Arun::eq(long num, RFASem *sem)
+int Arun::eq(long long num, RFASem *sem)
 {
 return eq(sem,num);					// Deletes sem.					// 12/12/02 AM.
 }
 
 
-long Arun::eq(long num, _TCHAR *str1)										// 07/11/03 AM.
+int Arun::eq(long long num, _TCHAR *str1)										// 07/11/03 AM.
 {
 if (num != 0)
 	return 0;
@@ -10339,7 +10339,7 @@ return empty(str1) ? 1 : 0;
 }
 
 
-long Arun::eq(_TCHAR *str1, long num)										// 07/11/03 AM.
+int Arun::eq(_TCHAR *str1, long long num)										// 07/11/03 AM.
 {
 if (num != 0)
 	return 0;
@@ -10347,9 +10347,9 @@ return empty(str1) ? 1 : 0;
 }
 
 
-long Arun::eq(float num, RFASem *sem)									// 08/18/01 AM.
+int Arun::eq(float num, RFASem *sem)									// 08/18/01 AM.
 {
-long res;
+int res;
 if (!sem)																		// 03/13/02 AM.
 	return 0;																	// 03/13/02 AM.
 
@@ -10372,7 +10372,7 @@ delete sem;
 return res;
 }
 
-long Arun::eq(_TCHAR *str1, _TCHAR *str2)
+int Arun::eq(_TCHAR *str1, _TCHAR *str2)
 {
 if (str1 && *str1 && str2 && *str2)
 	return !_tcscmp(str1,str2) ? true : false;
@@ -10382,7 +10382,7 @@ return true;				// Both are empty.
 }
 
 
-long Arun::eq(_TCHAR *str, RFASem *sem)
+int Arun::eq(_TCHAR *str, RFASem *sem)
 {
 if (!sem)																		// 03/13/02 AM.
 	return 0;																	// 03/13/02 AM.
@@ -10422,23 +10422,23 @@ switch (sem->getType())
 		return 0;
 		}
 	}
-long res = eq(sem->getName(), str);
+int res = eq(sem->getName(), str);
 delete sem;
 return res;
 }
 
 
-long Arun::eq(long num1, float num2)
+int Arun::eq(long long num1, float num2)
 {
 return num1 == num2;
 }
 
-long Arun::eq(float num1, long num2)
+int Arun::eq(float num1, long long num2)
 {
 return num1 == num2;
 }
 
-long Arun::eq(float num1, float num2)
+int Arun::eq(float num1, float num2)
 {
 return num1 == num2;
 }
@@ -10451,9 +10451,9 @@ return num1 == num2;
 * NOTE:	Should return bool...	12/12/02 AM.
 ********************************************/
 
-long Arun::ne(RFASem *sem, long num)
+int Arun::ne(RFASem *sem, long long num)
 {
-long res;
+int res;
 if (!sem)																		// 03/13/02 AM.
 	{
 	return (num ? 1 : 0);										// FIX.	// 12/12/02 AM.
@@ -10528,9 +10528,9 @@ delete sem;
 return res;
 }
 
-long Arun::ne(RFASem *sem, float num)									// 08/18/01 AM.
+int Arun::ne(RFASem *sem, float num)									// 08/18/01 AM.
 {
-long res;
+int res;
 if (!sem)																		// 03/13/02 AM.
 	return 1;	// Dummy recovery.										// 03/13/02 AM.
 
@@ -10554,19 +10554,19 @@ return res;
 }
 
 
-long Arun::ne(RFASem *sem1, RFASem *sem2)
+int Arun::ne(RFASem *sem1, RFASem *sem2)
 {
 bool ok = true;
-long num = 0L;															// FIX	// 08/17/01 AM.
+int num = 0;															// FIX	// 08/17/01 AM.
 if (!sem1 && !sem2)												// FIX.	// 07/04/06 AM.
 	return 0;																	// 07/04/06 AM.
 if (!sem1 || !sem2)															// 03/13/02 AM.
 	{
 	if (sem1)																	// 03/13/02 AM.
-		return ne(sem1,(long)0);	// Deletes sem.		// FIX.	// 07/04/06 AM.
+		return ne(sem1,0LL);	// Deletes sem.		// FIX.	// 07/04/06 AM.
 //		delete sem1;															// 03/13/02 AM.
 	if (sem2)																	// 03/13/02 AM.
-		return ne(sem2,(long)0);	// Deletes sem.		// FIX.	// 07/04/06 AM.
+		return ne(sem2,0LL);	// Deletes sem.		// FIX.	// 07/04/06 AM.
 //		delete sem2;															// 03/13/02 AM.
 	return 1;																	// 03/13/02 AM.
 	}
@@ -10772,19 +10772,19 @@ return 0;																		// 08/08/02 AM.
 }
 
 
-long Arun::ne(long num1, long num2)
+int Arun::ne(long long num1, long long num2)
 {
 return num1 != num2;
 }
 
-long Arun::ne(long num, RFASem *sem)
+int Arun::ne(long long num, RFASem *sem)
 {
 return ne(sem,num);			// Deletes sem.							// 12/12/02 AM.
 }
 
-long Arun::ne(float num, RFASem *sem)									// 08/18/01 AM.
+int Arun::ne(float num, RFASem *sem)									// 08/18/01 AM.
 {
-long res;
+int res;
 if (!sem)																		// 03/13/02 AM.
 	return 1;	// Dummy recovery.										// 03/13/02 AM.
 
@@ -10864,23 +10864,23 @@ return res;
 }
 
 
-long Arun::ne(float num1, long num2)
+int Arun::ne(float num1, long long num2)
 {
 return num1 != num2;
 }
 
-long Arun::ne(long num1, float num2)
+int Arun::ne(long long num1, float num2)
 {
 return num1 != num2;
 }
 
-long Arun::ne(float num1, float num2)
+int Arun::ne(float num1, float num2)
 {
 return num1 != num2;
 }
 
 
-long Arun::ne(long num, _TCHAR *str1)										// 07/11/03 AM.
+int Arun::ne(long long num, _TCHAR *str1)										// 07/11/03 AM.
 {
 if (num != 0)
 	return 1;
@@ -10888,7 +10888,7 @@ return empty(str1) ? 0 : 1;
 }
 
 
-long Arun::ne(_TCHAR *str1, long num)										// 07/11/03 AM.
+int Arun::ne(_TCHAR *str1, long long num)										// 07/11/03 AM.
 {
 if (num != 0)
 	return 1;
@@ -10902,9 +10902,9 @@ return empty(str1) ? 0 : 1;
 * SUBJ:	NLP++ '>' operator, compiled runtime.
 ********************************************/
 
-long Arun::gt(RFASem *sem, long num)
+int Arun::gt(RFASem *sem, long long num)
 {
-long res;
+int res;
 if (!sem)																		// 03/13/02 AM.
 //	return 1;	// Dummy recovery.							// FIX	// 08/10/08 AM.
 	return (num >= 0) ? 0 : 1;									// FIX	// 08/10/08 AM.
@@ -10928,9 +10928,9 @@ delete sem;
 return res;
 }
 
-long Arun::gt(RFASem *sem, float num)									// 08/18/01 AM.
+int Arun::gt(RFASem *sem, float num)									// 08/18/01 AM.
 {
-long res;
+int res;
 if (!sem)																		// 03/13/02 AM.
 //	return 1;	// Dummy recovery.							// FIX	// 08/10/08 AM.
 	return (num >= -0.00001) ? 0 : 1;						// FIX	// 08/10/08 AM.
@@ -10955,10 +10955,10 @@ return res;
 }
 
 
-long Arun::gt(RFASem *sem1, RFASem *sem2)	// VARIANT
+int Arun::gt(RFASem *sem1, RFASem *sem2)	// VARIANT
 {
 bool ok = true;
-long num = 0L;
+int num = 0;
 if (!sem1 && !sem2)												// FIX	// 08/10/08 AM.
 	return 0;														// FIX	// 08/10/08 AM.
 if (!sem1)															// FIX	// 08/10/08 AM.
@@ -11046,14 +11046,14 @@ return num;
 }
 
 
-long Arun::gt(long num1, long num2)	// VARIANT
+int Arun::gt(long long num1, long long num2)	// VARIANT
 {
 return num1 > num2;
 }
 
-long Arun::gt(long num, RFASem *sem)
+int Arun::gt(long long num, RFASem *sem)
 {
-long res;
+int res;
 if (!sem)																		// 03/13/02 AM.
 	return (num > 0);												// FIX	// 08/10/08 AM.
 
@@ -11076,9 +11076,9 @@ delete sem;
 return res;
 }
 
-long Arun::gt(float num, RFASem *sem)									// 08/18/01 AM.
+int Arun::gt(float num, RFASem *sem)									// 08/18/01 AM.
 {
-long res;
+int res;
 if (!sem)																		// 03/13/02 AM.
 	return (num > -0.00001);									// FIX	// 08/10/08 AM.
 
@@ -11101,17 +11101,17 @@ delete sem;
 return res;
 }
 
-long Arun::gt(float num1, long num2)
+int Arun::gt(float num1, long long num2)
 {
 return num1 > num2;
 }
 
-long Arun::gt(long num1, float num2)
+int Arun::gt(long long num1, float num2)
 {
 return num1 > num2;
 }
 
-long Arun::gt(float num1, float num2)
+int Arun::gt(float num1, float num2)
 {
 return num1 > num2;
 }
@@ -11123,9 +11123,9 @@ return num1 > num2;
 * SUBJ:	NLP++ '<' operator, compiled runtime.
 ********************************************/
 
-long Arun::lt(RFASem *sem, long num)
+int Arun::lt(RFASem *sem, long long num)
 {
-long res;
+int res;
 if (!sem)																		// 03/13/02 AM.
 	return (0 < num);												// FIX	// 08/10/08 AM.
 
@@ -11148,9 +11148,9 @@ delete sem;
 return res;
 }
 
-long Arun::lt(RFASem *sem, float num)									// 08/18/01 AM.
+int Arun::lt(RFASem *sem, float num)									// 08/18/01 AM.
 {
-long res;
+int res;
 if (!sem)																		// 03/13/02 AM.
 	return (-0.00001 < num);									// FIX	// 08/10/08 AM.
 
@@ -11174,10 +11174,10 @@ return res;
 }
 
 
-long Arun::lt(RFASem *sem1, RFASem *sem2)
+int Arun::lt(RFASem *sem1, RFASem *sem2)
 {
 bool ok = true;
-long num = 0L;
+int num = 0;
 if (!sem1 && !sem2)												// FIX	// 08/10/08 AM.
 	return 0;														// FIX	// 08/10/08 AM.
 if (!sem1)															// FIX	// 08/10/08 AM.
@@ -11267,14 +11267,14 @@ return num;
 }
 
 
-long Arun::lt(long num1, long num2)
+int Arun::lt(long long num1, long long num2)
 {
 return num1 < num2;
 }
 
-long Arun::lt(long num, RFASem *sem)
+int Arun::lt(long long num, RFASem *sem)
 {
-long res;
+int res;
 if (!sem)																		// 03/13/02 AM.
 	return (num < 0);												// FIX	// 08/10/08 AM.
 
@@ -11297,9 +11297,9 @@ delete sem;
 return res;
 }
 
-long Arun::lt(float num, RFASem *sem)									// 08/18/01 AM.
+int Arun::lt(float num, RFASem *sem)									// 08/18/01 AM.
 {
-long res;
+int res;
 if (!sem)																		// 03/13/02 AM.
 	return (num < -0.00001);									// FIX	// 08/10/08 AM.
 
@@ -11322,17 +11322,17 @@ delete sem;
 return res;
 }
 
-long Arun::lt(float num1, long num2)
+int Arun::lt(float num1, long long num2)
 {
 return num1 < num2;
 }
 
-long Arun::lt(long num1, float num2)
+int Arun::lt(long long num1, float num2)
 {
 return num1 < num2;
 }
 
-long Arun::lt(float num1, float num2)
+int Arun::lt(float num1, float num2)
 {
 return num1 < num2;
 }
@@ -11345,9 +11345,9 @@ return num1 < num2;
 * SUBJ:	NLP++ '>=' operator, compiled runtime.
 ********************************************/
 
-long Arun::ge(RFASem *sem, long num)
+int Arun::ge(RFASem *sem, long long num)
 {
-long res;
+int res;
 if (!sem)																		// 03/13/02 AM.
 	return (0 >= num);											// FIX	// 08/10/08 AM.
 
@@ -11370,9 +11370,9 @@ delete sem;
 return res;
 }
 
-long Arun::ge(RFASem *sem, float num)									// 08/18/01 AM.
+int Arun::ge(RFASem *sem, float num)									// 08/18/01 AM.
 {
-long res;
+int res;
 if (!sem)																		// 03/13/02 AM.
 	return (-0.00001 >= num);									// FIX	// 08/10/08 AM.
 
@@ -11396,10 +11396,10 @@ return res;
 }
 
 
-long Arun::ge(RFASem *sem1, RFASem *sem2)
+int Arun::ge(RFASem *sem1, RFASem *sem2)
 {
 bool ok = true;
-long num = 0L;
+int num = 0L;
 if (!sem1 && !sem2)												// FIX	// 08/10/08 AM.
 	return 1;														// FIX	// 08/10/08 AM.
 
@@ -11489,14 +11489,14 @@ return num;
 }
 
 
-long Arun::ge(long num1, long num2)
+int Arun::ge(long long num1, long long num2)
 {
 return num1 >= num2;
 }
 
-long Arun::ge(long num, RFASem *sem)
+int Arun::ge(long long num, RFASem *sem)
 {
-long res;
+int res;
 if (!sem)																		// 03/13/02 AM.
 	return (num >= 0);											// FIX	// 08/10/08 AM.
 
@@ -11519,9 +11519,9 @@ delete sem;
 return res;
 }
 
-long Arun::ge(float num, RFASem *sem)									// 08/18/01 AM.
+int Arun::ge(float num, RFASem *sem)									// 08/18/01 AM.
 {
-long res;
+int res;
 if (!sem)																		// 03/13/02 AM.
 	return (num >= -0.00001);									// FIX	// 08/10/08 AM.
 
@@ -11544,17 +11544,17 @@ delete sem;
 return res;
 }
 
-long Arun::ge(float num1, long num2)
+int Arun::ge(float num1, long long num2)
 {
 return num1 >= num2;
 }
 
-long Arun::ge(long num1, float num2)
+int Arun::ge(long long num1, float num2)
 {
 return num1 >= num2;
 }
 
-long Arun::ge(float num1, float num2)
+int Arun::ge(float num1, float num2)
 {
 return num1 >= num2;
 }
@@ -11567,9 +11567,9 @@ return num1 >= num2;
 * SUBJ:	NLP++ '<=' operator, compiled runtime.
 ********************************************/
 
-long Arun::le(RFASem *sem, long num)
+int Arun::le(RFASem *sem, long long num)
 {
-long res;
+int res;
 if (!sem)																		// 03/13/02 AM.
 	return (0 <= num);											// FIX	// 08/10/08 AM.
 
@@ -11592,9 +11592,9 @@ delete sem;
 return res;
 }
 
-long Arun::le(RFASem *sem, float num)									// 08/18/01 AM.
+int Arun::le(RFASem *sem, float num)									// 08/18/01 AM.
 {
-long res;
+int res;
 if (!sem)																		// 03/13/02 AM.
 	return (-0.00001 <= num);									// FIX	// 08/10/08 AM.
 
@@ -11618,10 +11618,10 @@ return res;
 }
 
 
-long Arun::le(RFASem *sem1, RFASem *sem2)
+int Arun::le(RFASem *sem1, RFASem *sem2)
 {
 bool ok = true;
-long num = 0L;
+int num = 0L;
 
 if (!sem1 && !sem2)												// FIX	// 08/10/08 AM.
 	return 1;														// FIX	// 08/10/08 AM.
@@ -11712,14 +11712,14 @@ return num;
 }
 
 
-long Arun::le(long num1, long num2)
+int Arun::le(long long num1, long long num2)
 {
 return num1 <= num2;
 }
 
-long Arun::le(long num, RFASem *sem)
+int Arun::le(long long num, RFASem *sem)
 {
-long res;
+int res;
 if (!sem)																		// 03/13/02 AM.
 	return (num <= 0);											// FIX	// 08/10/08 AM.
 
@@ -11742,9 +11742,9 @@ delete sem;
 return res;
 }
 
-long Arun::le(float num, RFASem *sem)									// 08/18/01 AM.
+int Arun::le(float num, RFASem *sem)									// 08/18/01 AM.
 {
-long res;
+int res;
 if (!sem)																		// 03/13/02 AM.
 	return (num <= -0.00001);												// 08/10/08 AM.
 
@@ -11767,17 +11767,17 @@ delete sem;
 return res;
 }
 
-long Arun::le(float num1, long num2)
+int Arun::le(float num1, long long num2)
 {
 return num1 <= num2;
 }
 
-long Arun::le(long num1, float num2)
+int Arun::le(long long num1, float num2)
 {
 return num1 <= num2;
 }
 
-long Arun::le(float num1, float num2)
+int Arun::le(float num1, float num2)
 {
 return num1 <= num2;
 }
@@ -11790,7 +11790,7 @@ return num1 <= num2;
 * NOTE:	06/11/00 AM. Should take any "atomic" value types.
 ********************************************/
 
-long Arun::vtand(RFASem *sem, long num)
+int Arun::vtand(RFASem *sem, long long num)
 {
 if (!sem)																		// 03/13/02 AM.
 	return 0;	// Dummy recovery.										// 03/13/02 AM.
@@ -11801,7 +11801,7 @@ if (!num)
 	return 0;				// Quick fail.
 	}
 
-long res;
+int res;
 _TCHAR *str;
 switch (sem->getType())													// 06/11/00 AM.
 	{
@@ -11864,12 +11864,12 @@ delete sem;
 return res;
 }
 
-long Arun::vtand(RFASem *sem1, float num2)								// 08/18/01 AM.
+int Arun::vtand(RFASem *sem1, float num2)								// 08/18/01 AM.
 {
 if (!sem1)																		// 03/13/02 AM.
 	return 0;	// Dummy recovery.										// 03/13/02 AM.
 
-if (!vtand(sem1, (long)1))		// Note: DELETES sem1.
+if (!vtand(sem1, 1LL))		// Note: DELETES sem1.
 	return 0;
 if (!num2)
 	return 0;
@@ -11877,7 +11877,7 @@ return 1;
 }
 
 // 06/11/00 AM. Overhaul.
-long Arun::vtand(RFASem *sem1, RFASem *sem2)
+int Arun::vtand(RFASem *sem1, RFASem *sem2)
 {
 if (!sem1 || !sem2)															// 03/13/02 AM.
 	{
@@ -11888,22 +11888,22 @@ if (!sem1 || !sem2)															// 03/13/02 AM.
 	return 0;																	// 03/13/02 AM.
 	}
 
-if (!vtand(sem1, (long)1))		// Note: DELETES sem1.
+if (!vtand(sem1, 1LL))		// Note: DELETES sem1.
 	{
 	delete sem2;
 	return 0;
 	}
 
-return vtand(sem2, (long)1);		// Note: DELETES sem2.
+return vtand(sem2, 1LL);		// Note: DELETES sem2.
 }
 
-long Arun::vtand(RFASem *sem, _TCHAR *str)
+int Arun::vtand(RFASem *sem, _TCHAR *str)
 {
 if (!sem)																		// 03/13/02 AM.
 	return 0;																	// 03/13/02 AM.
 
 // Better order of evaluation.											// 08/18/01 AM.
-if (!vtand(sem, (long)1))	// Note: DELETES sem.
+if (!vtand(sem, 1LL))	// Note: DELETES sem.
 	return 0;
 if (!str || !*str)
 	return 0;
@@ -11920,62 +11920,62 @@ if (!flg)
 	delete sem;
 	return false;
 	}
-return vtand(sem, (long)1) ? true : false;		// Note: DELETES sem1.
+return vtand(sem, 1LL) ? true : false;		// Note: DELETES sem1.
 }
 
 
-long Arun::vtand(long num1, long num2)
+int Arun::vtand(long long num1, long long num2)
 {
 return num1 && num2;
 }
 
 // OPT:	Could optimize by inlining.
-long Arun::vtand(long num, RFASem *sem)
+int Arun::vtand(long long num, RFASem *sem)
 {
 return vtand(sem, num);														// 06/11/00 AM.
 }
 
-long Arun::vtand(float num, RFASem *sem)									// 08/18/01 AM.
+int Arun::vtand(float num, RFASem *sem)									// 08/18/01 AM.
 {
 return vtand(sem, num);
 }
 
-long Arun::vtand(long num, _TCHAR *str)										// 08/18/01 AM.
+int Arun::vtand(long long num, _TCHAR *str)										// 08/18/01 AM.
 {
 return (num && str && *str);
 }
 
-bool Arun::vtand(long num, bool flg)										// 09/03/01 AM.
+bool Arun::vtand(long long num, bool flg)										// 09/03/01 AM.
 {
 return num && flg;
 }
 
-long Arun::vtand(float num, _TCHAR *str)									// 08/18/01 AM.
+int Arun::vtand(float num, _TCHAR *str)									// 08/18/01 AM.
 {
 return (num && str && *str);
 }
 
-long Arun::vtand(_TCHAR *str, RFASem *sem)
+int Arun::vtand(_TCHAR *str, RFASem *sem)
 {
 return vtand(sem, str);
 }
 
-long Arun::vtand(_TCHAR *str, long num)
+int Arun::vtand(_TCHAR *str, long long num)
 {
 return (str && *str && num);
 }
 
-long Arun::vtand(_TCHAR *str, float num)
+int Arun::vtand(_TCHAR *str, float num)
 {
 return (str && *str && num);
 }
 
-long Arun::vtand(_TCHAR *str1, _TCHAR *str2)
+int Arun::vtand(_TCHAR *str1, _TCHAR *str2)
 {
 return (str1 && *str1 && str2 && *str2);
 }
 
-long Arun::vtand(float num1, long num2)									// 08/18/01 AM.
+int Arun::vtand(float num1, long long num2)									// 08/18/01 AM.
 {
 return (num1 && num2);
 }
@@ -11985,12 +11985,12 @@ bool Arun::vtand(float fnum, bool flg)									// 09/03/01 AM.
 return fnum && flg;
 }
 
-long Arun::vtand(long num1, float num2)									// 08/18/01 AM.
+int Arun::vtand(long long num1, float num2)									// 08/18/01 AM.
 {
 return (num1 && num2);
 }
 
-long Arun::vtand(float num1, float num2)									// 08/18/01 AM.
+int Arun::vtand(float num1, float num2)									// 08/18/01 AM.
 {
 return (num1 && num2);
 }
@@ -12007,10 +12007,10 @@ if (!flg)
 	delete sem;
 	return false;
 	}
-return vtand(sem, (long)1) ? true : false;
+return vtand(sem, 1LL) ? true : false;
 }
 
-bool Arun::vtand(bool flg, long num)										// 09/03/01 AM.
+bool Arun::vtand(bool flg, long long num)										// 09/03/01 AM.
 {
 return flg && num;
 }
@@ -12038,7 +12038,7 @@ return flg1 && flg2;
 ********************************************/
 
 // 06/11/00 AM. Overhaul.
-long Arun::vtor(RFASem *sem, long num)
+int Arun::vtor(RFASem *sem, long long num)
 {
 if (!sem)															// FIX.	// 04/28/01 AM.
 	{
@@ -12051,7 +12051,7 @@ if (num)
 	return 1;				// Quick success.
 	}
 
-long res;
+int res;
 _TCHAR *str;
 switch (sem->getType())														// 06/11/00 AM.
 	{
@@ -12108,26 +12108,26 @@ delete sem;
 return res;
 }
 
-long Arun::vtor(RFASem *sem1, float num2)								// 08/19/01 AM.
+int Arun::vtor(RFASem *sem1, float num2)								// 08/19/01 AM.
 {
-if (vtor(sem1,(long)0))		// Note: DELETES sem1.
+if (vtor(sem1,0LL))		// Note: DELETES sem1.
 	return 1;
 return (num2 ? 1 : 0);
 }
 
 
-long Arun::vtor(RFASem *sem1, RFASem *sem2)
+int Arun::vtor(RFASem *sem1, RFASem *sem2)
 {
-if (vtor(sem1,(long)0))		// Note: DELETES sem1.
+if (vtor(sem1,0LL))		// Note: DELETES sem1.
 	{
 	delete sem2;
 	return 1;
 	}
 
-return vtor(sem2,(long)0);	// Note: DELETES sem2.
+return vtor(sem2,0LL);	// Note: DELETES sem2.
 }
 
-long Arun::vtor(RFASem *sem, _TCHAR *str)
+int Arun::vtor(RFASem *sem, _TCHAR *str)
 {
 if (str && *str)
 	{
@@ -12135,7 +12135,7 @@ if (str && *str)
 	return 1;
 	}
 
-return vtor(sem,(long)0);	// Note: DELETES sem.
+return vtor(sem,0LL);	// Note: DELETES sem.
 }
 
 bool Arun::vtor(RFASem *sem, bool flg)									// 09/03/01 AM.
@@ -12145,61 +12145,61 @@ if (flg)
 	delete sem;
 	return true;
 	}
-return vtor(sem, (long)0) ? true : false;	// Note: DELETES sem.
+return vtor(sem, 0LL) ? true : false;	// Note: DELETES sem.
 }
 
 
-long Arun::vtor(long num1, long num2)
+int Arun::vtor(long long num1, long long num2)
 {
 return num1 || num2;
 }
 
-long Arun::vtor(long num, RFASem *sem)
+int Arun::vtor(long long num, RFASem *sem)
 {
 return vtor(sem,num);
 }
 
-long Arun::vtor(float num, RFASem *sem)									// 08/19/01 AM.
+int Arun::vtor(float num, RFASem *sem)									// 08/19/01 AM.
 {
 return vtor(sem,num);
 }
 
-long Arun::vtor(long num, _TCHAR *str)										// 08/19/01 AM.
+int Arun::vtor(long long num, _TCHAR *str)										// 08/19/01 AM.
 {
 return (str && *str) || num;
 }
 
-bool Arun::vtor(long num, bool flg)										// 09/03/01 AM.
+bool Arun::vtor(long long num, bool flg)										// 09/03/01 AM.
 {
 return num || flg;
 }
 
-long Arun::vtor(float num, _TCHAR *str)										// 08/19/01 AM.
+int Arun::vtor(float num, _TCHAR *str)										// 08/19/01 AM.
 {
 return (str && *str) || num;
 }
 
-long Arun::vtor(_TCHAR *str, RFASem *sem)
+int Arun::vtor(_TCHAR *str, RFASem *sem)
 {
 if (str && *str)
 	{
 	delete sem;
 	return 1;
 	}
-return vtor(sem,(long)0);
+return vtor(sem,0LL);
 }
 
-long Arun::vtor(_TCHAR *str, long num)
+int Arun::vtor(_TCHAR *str, long long num)
 {
 return (num || (str && *str));
 }
 
-long Arun::vtor(_TCHAR *str, float num)										// 08/19/01 AM.
+int Arun::vtor(_TCHAR *str, float num)										// 08/19/01 AM.
 {
 return (num || (str && *str));
 }
 
-long Arun::vtor(_TCHAR *str1, _TCHAR *str2)
+int Arun::vtor(_TCHAR *str1, _TCHAR *str2)
 {
 return ((str1 && *str1) || (str2 && *str2));
 }
@@ -12209,7 +12209,7 @@ bool Arun::vtor(_TCHAR *str, bool flg)										// 09/03/01 AM.
 return ((str && *str) || flg);
 }
 
-long Arun::vtor(float num1, long num2)									// 08/19/01 AM.
+int Arun::vtor(float num1, long long num2)									// 08/19/01 AM.
 {
 return num1 || num2;
 }
@@ -12219,12 +12219,12 @@ bool Arun::vtor(float fnum, bool flg)										// 09/03/01 AM.
 return fnum || flg;
 }
 
-long Arun::vtor(long num1, float num2)									// 08/19/01 AM.
+int Arun::vtor(long long num1, float num2)									// 08/19/01 AM.
 {
 return num1 || num2;
 }
 
-long Arun::vtor(float num1, float num2)									// 08/19/01 AM.
+int Arun::vtor(float num1, float num2)									// 08/19/01 AM.
 {
 return num1 || num2;
 }
@@ -12236,10 +12236,10 @@ if (flg)
 	delete sem;
 	return true;
 	}
-return vtor(sem, (long)0) ? true : false;	// Note: DELETES sem.
+return vtor(sem, 0LL) ? true : false;	// Note: DELETES sem.
 }
 
-bool Arun::vtor(bool flg, long num)										// 09/03/01 AM.
+bool Arun::vtor(bool flg, long long num)										// 09/03/01 AM.
 {
 return flg || num;
 }
@@ -12274,7 +12274,7 @@ long Arun::inc(
 	Nlppp *nlppp
 	)
 {
-long num = 0L;
+long long num = 0LL;
 if (!sem)																		// 03/13/02 AM.
 	return 0;																	// 03/13/02 AM.
 
@@ -12299,7 +12299,7 @@ long Arun::inc(
 	Nlppp *nlppp
 	)
 {
-long num= 0;
+long long num = 0LL;
 Ipair *pair;
 Ivar::getVar((enum Ivartype)typ,varname,nelt,nlppp,/*UP*/pair);
 if (!pair)
@@ -12315,7 +12315,7 @@ if (!darg && index <= 0)										// FIX.	// 07/15/03 AM.
 	{
 	// Variable has no value.  Set to 1 and done.
 	num = 1;
-	Var::setVal(pair, (long)1);	// Install 1 in variable.
+	Var::setVal(pair, 1LL);	// Install 1 in variable.
 	return num;
 	}
 
@@ -12333,7 +12333,7 @@ if (index >= 0)	// INDEXED ARRAY VALUE.								// 07/15/03 AM.
 		// assign to that position down below.
 		for (; ii <= index; ++ii)											// 07/15/03 AM.
 			{
-			arg = new Iarg((long)0);										// 07/15/03 AM.
+			arg = new Iarg(0LL);										// 07/15/03 AM.
 			vals->rpush(arg);													// 07/15/03 AM.
 			}
 		darg = vals->getLast();												// 07/15/03 AM.
@@ -12422,7 +12422,7 @@ long Arun::dec(
 	Nlppp *nlppp
 	)
 {
-long num = 0L;
+long long num = 0LL;
 if (!sem)																		// 03/13/02 AM.
 	return 0;																	// 03/13/02 AM.
 
@@ -12446,7 +12446,7 @@ long Arun::dec(
 	Nlppp *nlppp
 	)
 {
-long num= 0;
+long long num = 0LL;
 Ipair *pair;
 Ivar::getVar((enum Ivartype)typ,varname,nelt,nlppp,/*UP*/pair);
 if (!pair)
@@ -12480,7 +12480,7 @@ if (index >= 0)	// INDEXED ARRAY VALUE.								// 07/15/03 AM.
 		// assign to that position down below.
 		for (; ii <= index; ++ii)											// 07/15/03 AM.
 			{
-			arg = new Iarg((long)0);										// 07/15/03 AM.
+			arg = new Iarg(0LL);										// 07/15/03 AM.
 			vals->rpush(arg);													// 07/15/03 AM.
 			}
 		darg = vals->getLast();												// 07/15/03 AM.
@@ -12559,11 +12559,11 @@ return dec(typ,varname,nelt,index,nlppp);
 * CR:		06/01/00 AM.
 * SUBJ:	NLP++ '!' operator, compiled runtime.
 ********************************************/
-long Arun::vtnot(
+int Arun::vtnot(
 	RFASem *sem
 	)
 {
-long num = 0L;
+long long num = 0;
 
 // Creates variable with init value of zero, if not found.
 if (!Iexpr::vtnot(sem, 0, /*UP*/ num))
@@ -12573,22 +12573,22 @@ if (!Iexpr::vtnot(sem, 0, /*UP*/ num))
 	errOut(&gerrStr,false);
 	}
 
-return num;
+return 0LL;
 }
 
-long Arun::vtnot(
-	long num
+int Arun::vtnot(
+	long long num
 	)
 {
 return (num ? 0 : 1);											// FIX!	// 04/29/01 AM.
 }
 
-long Arun::vtnot(float num)													// 08/19/01 AM.
+int Arun::vtnot(float num)													// 08/19/01 AM.
 {
 return (num ? 0 : 1);
 }
 
-long Arun::vtnot(
+int Arun::vtnot(
 	_TCHAR *str
 	)
 {
@@ -12616,7 +12616,7 @@ long Arun::postinc(
 	Nlppp *nlppp
 	)
 {
-long ret = 0;				// Value to return.
+long long ret = 0LL;				// Value to return.
 Ipair *pair;
 Ivar::getVar((enum Ivartype)typ,varname,nelt,nlppp,/*UP*/pair);
 if (!pair)
@@ -12628,7 +12628,7 @@ Iarg *arg;
 if (!vals || !(darg = vals->getFirst()))
 	{
 	// Variable has no value.  Set to +1 and done.;
-	Var::setVal(pair, (long)(ret+1));	// Install +1 in variable.
+	Var::setVal(pair, (long long)(ret+1));	// Install +1 in variable.
 	return ret;
 	}
 if (darg->Right())
@@ -12675,7 +12675,7 @@ long Arun::postdec(
 	Nlppp *nlppp
 	)
 {
-long ret = 0;				// Value to return.
+long long ret = 0LL;				// Value to return.
 Ipair *pair;
 Ivar::getVar((enum Ivartype)typ,varname,nelt,nlppp,/*UP*/pair);
 if (!pair)
@@ -12687,7 +12687,7 @@ Iarg *arg;
 if (!vals || !(darg = vals->getFirst()))
 	{
 	// Variable has no value.  Set to -1 and done.;
-	Var::setVal(pair, (long)(ret-1));	// Install -1 in variable.
+	Var::setVal(pair, (long long)(ret-1));	// Install -1 in variable.
 	return ret;
 	}
 if (darg->Right())

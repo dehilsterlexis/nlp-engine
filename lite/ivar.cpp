@@ -531,7 +531,7 @@ findVar(vtype,vname,vnum,nlppp, /*UP*/ pairx);						// 05/25/00 AM.
 if (!pairx)
 	{
 	// BUILD A DEFAULT VALUE.												// 11/15/99 AM.
-	sem = new RFASem((long) 0);											// 11/15/99 AM.
+	sem = new RFASem(0LL);											// 11/15/99 AM.
 	return true;
 	}
 
@@ -539,14 +539,14 @@ Dlist<Iarg> *vals = pairx->getVals();
 if (!vals)
 	{
 	// BUILD A DEFAULT VALUE.									// FIX!	// 01/02/00 AM.
-	sem = new RFASem((long) 0);								// FIX!	// 01/02/00 AM.
+	sem = new RFASem(0LL);								// FIX!	// 01/02/00 AM.
 	return true;		// Pair with no values list.
 	}
 Delt<Iarg> *darg = vals->getFirst();
 if (!darg)
 	{
 	// BUILD A DEFAULT VALUE.									// FIX!	// 01/02/00 AM.
-	sem = new RFASem((long) 0);								// FIX!	// 01/02/00 AM.
+	sem = new RFASem(0LL);								// FIX!	// 01/02/00 AM.
 	return true;		// Empty values list.
 	}
 
@@ -556,7 +556,7 @@ if (vindex >= 0)		// Index into variable's values (ARRAY!)	// 10/13/00 AM.
 		darg = darg->Right();												// 10/13/00 AM.
 	if (!darg)																	// 10/13/00 AM.
 		{
-		sem = new RFASem((long) 0);										// 10/13/00 AM.
+		sem = new RFASem(0LL);										// 10/13/00 AM.
 		return true;															// 10/13/00 AM.
 		}
 	return varVal(darg->getData(), sem);
@@ -1003,7 +1003,7 @@ Var::find(name,dlist,/*UP*/pairx);
 if (!pairx)
 	{
 	// BUILD A DEFAULT VALUE.												// 11/21/00 AM.
-	//sem = new RFASem((long) 0);											// 11/15/99 AM.
+	//sem = new RFASem(0LL);											// 11/15/99 AM.
 	return true;
 	}
 
@@ -1011,14 +1011,14 @@ Dlist<Iarg> *vals = pairx->getVals();
 if (!vals)
 	{
 	// BUILD A DEFAULT VALUE.												// 11/21/00 AM.
-	//sem = new RFASem((long) 0);								// FIX!	// 01/02/00 AM.
+	//sem = new RFASem(0LL);								// FIX!	// 01/02/00 AM.
 	return true;		// Pair with no values list.
 	}
 Delt<Iarg> *darg = vals->getFirst();
 if (!darg)
 	{
 	// BUILD A DEFAULT VALUE.												// 11/21/00 AM.
-	//sem = new RFASem((long) 0);								// FIX!	// 01/02/00 AM.
+	//sem = new RFASem(0LL);								// FIX!	// 01/02/00 AM.
 	return true;		// Empty values list.
 	}
 
@@ -2185,7 +2185,7 @@ return false;
 bool Ivar::nodeVarEQ(
 	Pn *pn,
 	_TCHAR *name,			// Name of var.
-	long nval
+	long long nval
 	)
 {
 if (!pn)
@@ -2262,7 +2262,7 @@ return false;
 bool Ivar::nodeVarGTLT(
 	Pn *pn,
 	_TCHAR *name,			// Name of var.
-	long nval,
+	long long nval,
 	bool lessThan
 	)
 {
@@ -2297,7 +2297,7 @@ if (darg->Right())
 Iarg *iarg = darg->getData();
 RFASem *sem;	// FIX. // 07/12/11 AM.
 bool ok = false;	// FIX.	// 07/12/11 AM.
-long aval = 0;	// FIX.	// 07/12/11 AM.
+long long aval = 0LL;	// FIX.	// 07/12/11 AM.
 
 switch (iarg->getType())
 	{
@@ -2316,12 +2316,7 @@ switch (iarg->getType())
 			}
 		break;
 	case IASTR:
-	    try {
-            aval = std::stol(iarg->getStr());
-        }
-        catch (const std::invalid_argument) {
-			return false;
-		}
+        str_to_long(iarg->getStr(),aval);
 		return lessThan? aval < nval : aval > nval;
 		break;
 	case IAFLOAT:
@@ -2432,7 +2427,7 @@ return true;
 bool Ivar::nodeReplaceval(
 	Pn *pn,
 	_TCHAR *name,			// Name of var.
-	long numval,		// Value to replace.
+	long long numval,		// Value to replace.
 	bool bRM,	// If rm existing values	// 12/12/14 AM.
 	bool bPUSH	// If pushing value front	// 12/12/14 AM.
 	)
@@ -2552,7 +2547,7 @@ return true;
 bool Ivar::nodePushval(
 	Pn *pn,
 	_TCHAR *name,			// Name of var.
-	long numval,		// Value to replace.
+	long long numval,		// Value to replace.
 	bool bRM,	// If rm existing values
 	bool bPUSH	// If pushing value front
 	)

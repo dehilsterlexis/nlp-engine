@@ -649,7 +649,7 @@ bool Pre::preVareq(
 {
 _TCHAR *str;
 _TCHAR *sval;
-long nval;
+long long nval;
 
 if (!Arg::str1(_T("preVareq"), (DELTS*&)args, str))
 	return false;
@@ -680,7 +680,7 @@ bool Pre::preVargt(
 {
 _TCHAR *str;
 _TCHAR *sval;
-long nval;
+long long nval;
 
 if (!Arg::str1(_T("preVargt"), (DELTS*&)args, str))
 	return false;
@@ -710,7 +710,7 @@ bool Pre::preVarlt(
 {
 _TCHAR *str;
 _TCHAR *sval;
-long nval;
+long long nval;
 
 if (!Arg::str1(_T("preVarlt"), (DELTS*&)args, str))
 	return false;
@@ -742,7 +742,7 @@ bool Pre::preVarne(
 {
 _TCHAR *str;
 _TCHAR *sval;
-long nval;
+long long nval;
 
 if (!Arg::str1(_T("preVareq"), (DELTS*&)args, str))
 	return false;

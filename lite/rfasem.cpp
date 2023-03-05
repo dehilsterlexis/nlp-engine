@@ -67,7 +67,8 @@ RFASem::RFASem(Iarg			  *x) : Sem() {val_.arg_	  = x; type_ = RSARG;   }
 RFASem::RFASem(Ipair			  *x) : Sem() {val_.pair_	  = x; type_ = RSPAIR;  }
 RFASem::RFASem(Iaction		  *x) : Sem() {val_.action_  = x; type_ = RSACTION;}
 RFASem::RFASem(Ipre			  *x)	: Sem() {val_.pre_	  = x; type_ = RSPRE;   }
-RFASem::RFASem(long			   x)	: Sem() {val_.long_	  = x; type_ = RSLONG;	}
+RFASem::RFASem(long	long		   x)	: Sem() {val_.long_	  = x; type_ = RSLONG;	}
+RFASem::RFASem(long			   x)	: Sem() {val_.long_	  = (long long)x; type_ = RSLONG;	}
 RFASem::RFASem(float				x) : Sem() {val_.float_	  = x; type_ = RSFLOAT; }
 RFASem::RFASem(std::_t_ostream		  *x) : Sem() {val_.ostr_	  = x; type_ = RSOSTREAM;}
 RFASem::RFASem(Ifunc			  *x) : Sem() {val_.func_	  = x; type_ = RSFUNC;}
@@ -420,7 +421,7 @@ Iaction				*RFASem::getAction()		{return val_.action_; }
 Ipre					*RFASem::getPre()			{return val_.pre_;	 }
 _TCHAR					*RFASem::getName()		{return val_.name_;   }
 _TCHAR					*RFASem::getNum()			{return val_.name_;	 }
-long					 RFASem::getLong()		{return val_.long_;	 }
+long long					 RFASem::getLong()		{return val_.long_;	 }
 float					 RFASem::getFloat()		{return val_.float_;	 }
 std::_t_ostream				*RFASem::getOstream()	{return val_.ostr_;	 }
 Ifunc					*RFASem::getFunc()		{return val_.func_;	 }
@@ -470,7 +471,7 @@ void RFASem::setAction(Iaction			*x)	{val_.action_ = x; }
 void RFASem::setPre(Ipre					*x)	{val_.pre_	  = x; }
 void RFASem::setName(_TCHAR					*x)	{val_.name_   = x; }
 void RFASem::setNum(_TCHAR					*x)	{val_.name_   = x; }
-void RFASem::setLong(long					 x)	{val_.long_	  = x; }
+void RFASem::setLong(long long				x)	{val_.long_	  = x; }
 void RFASem::setFloat(float				 x)	{val_.float_  = x; }
 void RFASem::setOstream(std::_t_ostream			*x)	{val_.ostr_	  = x; }
 
@@ -840,7 +841,7 @@ return ostr;
 * ASS:	Assume if name type, will take numeric string value.
 *********************************************/
 
-long RFASem::sem_set_long(long num, bool &ok)
+long long RFASem::sem_set_long(long long num, bool &ok)
 {
 ok = true;
 switch (type_)
@@ -869,10 +870,10 @@ return num;
 * NOTE:	Convenience function.
 *********************************************/
 
-long RFASem::sem_to_long(bool &ok)
+long long RFASem::sem_to_long(bool &ok)
 {
 ok = true;
-long num = 0;
+long long num = 0;
 switch (type_)
 	{
 	case RSLONG:

@@ -823,7 +823,7 @@ return true;
 ********************************************/
 
 inline bool CMLTok::getCMLnum(
-	long &field			// CML field to fill.
+	long long &field			// CML field to fill.
 	)
 {
 ptr_ = &(buf_[0]);
@@ -864,7 +864,7 @@ return true;
 
 bool CMLTok::getCMLpagetag()
 {
-long pagenum = 0;
+long long pagenum = 0;
 bool endtag = false;
 if (!readCMLpagetag(pagenum, endtag))
 	return false;
@@ -888,7 +888,7 @@ return makePagenode(pagenum) ? true : false;
 ********************************************/
 
 bool CMLTok::readCMLpagetag(
-	long &pagenum,
+	long long &pagenum,
 	bool &endtag
 	)
 {
@@ -1062,7 +1062,7 @@ return true;
 * RET:	node - newly created page node.
 ********************************************/
 
-Node<Pn> *CMLTok::makePagenode(long pagenum)
+Node<Pn> *CMLTok::makePagenode(long long pagenum)
 {
 updatePagenode();			// Update info for the current page node.
 updateLinenode(false);	// Update info for the current line node.
@@ -1528,7 +1528,7 @@ return true;
 inline bool CMLTok::replaceNum(
 	Node<Pn> *node,
 	_TCHAR *name,	// variable name.
-	long val
+	long long val
 	)
 {
 if (!node)

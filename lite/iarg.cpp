@@ -107,11 +107,20 @@ val_.str_ = str;
 #endif
 }
 
-Iarg::Iarg(long num)
+Iarg::Iarg(long long num)
 {
 type = IANUM;
 val_.num_ = num;
 
+#ifndef STABLE_
+++count_;
+#endif
+}
+
+Iarg::Iarg(long num)
+{
+type = IANUM;
+val_.num_ = (long long) num;
 #ifndef STABLE_
 ++count_;
 #endif
@@ -634,7 +643,7 @@ if (type != IASTR)
 return val_.str_;
 }
 
-long Iarg::getNum()
+long long Iarg::getNum()
 {
 if (type != IANUM)
 	{
@@ -689,7 +698,7 @@ return val_.sem_;
 }
 
 // FOR ODBC BINDING.															// 06/08/02 AM.
-long *Iarg::getNumaddr()													// 06/08/02 AM.
+long long *Iarg::getNumaddr()													// 06/08/02 AM.
 {
 return &(val_.num_);
 }
@@ -781,7 +790,7 @@ val_.sem_ = x;
 * OPT:	Would like semantics to stop storing numeric args as strings.
 ********************************************/
 
-bool Iarg::fetchNum(/*UP*/ long &num)
+bool Iarg::fetchNum(/*UP*/ long long &num)
 {
 num = -1;
 switch (type)

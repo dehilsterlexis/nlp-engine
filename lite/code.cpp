@@ -743,7 +743,8 @@ if (!(fout = Code::getOut(parse)))		// 03/23/99 AM
 // Print out all values.
 // (Handling multiple values of variable).
 bool first = true;
-Iarg *arg;																	// 12/03/99 AM.
+Iarg *arg;	
+long n;																// 12/03/99 AM.
 while (values)
 	{
 	// Get string and print it.
@@ -762,7 +763,8 @@ while (values)
 			*fout << str(st) << std::flush;									// 03/23/99 AM.
 			break;
 		case IANUM:															// 12/03/99 AM.
-			*fout << arg->getNum() << std::flush;							// 12/03/99 AM.
+			n = arg->getNum();
+			*fout << n << std::flush;							// 12/03/99 AM.
 			break;
 		default:
 			{
